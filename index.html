@@ -1,369 +1,179 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta charset="UTF-8">
+  <title>Lluvia de Frases</title>
 
-<title>💗 Привітання з днем народження ✨</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
-
-<style>
-
-*{
-    box-sizing:border-box;
-}
-
-html,body{
-    margin:0;
-    padding:0;
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    background-color:#000;
-}
-
-body{
-    position:fixed;
-    inset:0;
-}
-
-.terminal{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100vw;
-    height:100vh;
-    overflow:hidden;
-    z-index:1;
-}
-
-.text-container{
-    position:absolute;
-    width:100%;
-    color:#ff1493;
-    font-family:'Courier New',monospace;
-    font-size:24px;
-    text-shadow:0 0 15px #ff69b4;
-    line-height:1.2;
-    opacity:.9;
-    animation:matrixGlow 2s infinite;
-    mix-blend-mode:screen;
-    white-space:nowrap;
-}
-
-@keyframes matrixGlow{
-    0%,100%{
-        opacity:.7;
-        text-shadow:0 0 15px #ff69b4;
-    }
-    50%{
-        opacity:1;
-        text-shadow:0 0 25px #ff1493;
-    }
-}
-
-@keyframes scroll{
-    0%{
-        transform:translateY(100vh);
-    }
-    100%{
-        transform:translateY(-100%);
-    }
-}
-
-.love-container{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100vw;
-    height:100vh;
-    z-index:2;
-    pointer-events:none;
-    overflow:hidden;
-}
-
-.love-text{
-    position:absolute;
-    color:#ffd7ff;
-    font-size:1.8rem;
-    opacity:0;
-    text-shadow:0 0 25px rgba(255,105,180,.8);
-    animation:caidaHolografica 10s cubic-bezier(.17,.67,.45,.99) infinite;
-    mix-blend-mode:screen;
-}
-
-@keyframes caidaHolografica{
-    0%{
-        transform:translate3d(-50%,-120vh,100px) rotate3d(1,.2,.5,15deg) scale(1.2);
-        opacity:0;
-    }
-    20%{
-        opacity:1;
-    }
-    80%{
-        opacity:.8;
-    }
-    100%{
-        transform:translate3d(50%,120vh,-200px) rotate3d(.5,1,.2,-15deg) scale(.8);
-        opacity:0;
-    }
-}
-
-.centro{
-    position:fixed;
-    text-align:center;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    width:90%;
-    max-width:1000px;
-    font-size:6rem;
-    line-height:1.1;
-    color:transparent;
-    background:linear-gradient(45deg,#ff0202 20%,#ff02f2 45%,#00ffd9 70%);
-    -webkit-background-clip:text;
-    background-clip:text;
-    animation:brilloPerpetuo 3s ease-in-out infinite;
-    font-family:'Courier New',monospace;
-    font-weight:bold;
-    z-index:3;
-    padding:20px 40px;
-    border:2px solid rgba(255,215,0,.3);
-    border-radius:15px;
-    backdrop-filter:blur(12px);
-}
-
-.centro span{
-    font-size:3rem;
-}
-
-@keyframes brilloPerpetuo{
-    0%,100%{
-        filter:drop-shadow(0 0 15px #ff1493);
-    }
-    50%{
-        filter:drop-shadow(0 0 40px #ff69b400);
-    }
-}
-
-.efecto-bloom{
-    position:fixed;
-    width:100%;
-    height:100%;
-    background:radial-gradient(
-        circle at 50% 50%,
-        rgba(255,105,180,.1) 0%,
-        transparent 60%
-    );
-    mix-blend-mode:overlay;
-    animation:pulsacionBloom 8s infinite;
-    z-index:1;
-    pointer-events:none;
-}
-
-@keyframes pulsacionBloom{
-    0%,100%{
-        opacity:.6;
-        transform:scale(1);
-    }
-    50%{
-        opacity:.8;
-        transform:scale(1.2);
-    }
-}
-
-.hidden-image{
-    opacity:0;
-    visibility:hidden;
-}
-
-.video-personalizado{
-    width:100%;
-    max-width:600px;
-    display:block;
-    margin:20px auto;
-    border-radius:20px;
-    box-shadow:0 0 20px rgba(255,192,203,.8);
-    z-index:1;
-    position:relative;
-}
-
-.hidden-video{
-    display:none;
-}
-
-
-/* AJUSTE PARA CELULAR */
-
-@media (max-width:768px){
-
-    .text-container{
-        font-size:15px;
-        line-height:1.3;
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: black;
+      font-family: 'Segoe UI', sans-serif;
     }
 
-    .love-text{
-        font-size:1.1rem;
+    canvas {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
     }
 
-    .centro{
-        width:88%;
-        max-width:360px;
-        font-size:clamp(2rem,8vw,3rem);
-        line-height:1.15;
-        padding:15px 10px;
-        border-radius:12px;
-        border-width:1px;
+    .mensaje-centro {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3em;
+      font-weight: bold;
+      text-align: center;
+      z-index: 1;
+      animation: colores 3s infinite linear;
+      text-shadow: 2px 2px 10px #00fff2;
     }
 
-    .centro span{
-        font-size:1.5rem;
+    .mensaje-abajo {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2em;
+      font-weight: bold;
+      color: #9400D3;
+      text-shadow: 2px 2px 8px #000000;
+      z-index: 2;
+      letter-spacing: 2px;
     }
 
-}
-
-@media (max-width:380px){
-
-    .centro{
-        width:90%;
-        font-size:1.8rem;
-        padding:12px 8px;
+    /* BOTÓN DE AUDIO */
+    .audio-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(255, 20, 147, 0.25);
+      backdrop-filter: blur(5px);
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 999;
+      box-shadow: 0 0 15px #ff1493;
+      transition: 0.3s;
     }
 
-    .centro span{
-        font-size:1.3rem;
+    .audio-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 25px #ff69b4;
     }
 
-    .text-container{
-        font-size:13px;
+    @keyframes colores {
+      0%   { color: #ff69b4; }
+      25%  { color: #ff0088; }
+      50%  { color: #c71585; }
+      75%  { color: #e22bae; }
+      100% { color: #ff69b4; }
     }
-
-}
-
-</style>
+  </style>
 </head>
 
 <body>
 
-<audio id="musica" autoplay loop>
+  <canvas id="canvas"></canvas>
+
+  <div class="mensaje-centro">
+    З ДНЕМ НАРОДЖЕННЯ!!!! ❤️
+  </div>
+
+  <div class="mensaje-abajo">
+    😍 Щастя, Здоров'я, Многая літа 😍
+  </div>
+
+  <button class="audio-btn" onclick="toggleAudio()">
+    🎵
+  </button>
+
+  <!-- AUDIO -->
+  <audio id="musica" loop>
     <source src="Happy Birthday.mp3" type="audio/mpeg">
-</audio>
+  </audio>
 
-<div class="efecto-bloom"></div>
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
 
-<div class="terminal" id="terminal"></div>
-
-<div class="love-container" id="loveContainer"></div>
-
-<div class="centro">
-    З днем народження!!!<span> ❤️❤️</span>
-</div>
-
-<script>
-
-const LINE_COUNT = window.innerWidth <= 768 ? 12 : 20;
-
-const MATRIX_TEXT = "З днем народження!!";
-
-const LOVE_CHARS = ["💗","❤️","💕","✨"];
-
-function initMatrix(){
-
-    const container = document.getElementById('terminal');
-
-    for(let i = 0; i < LINE_COUNT; i++){
-
-        const line = document.createElement('div');
-
-        line.className = 'text-container';
-
-        line.style.animation = `scroll ${5 + i / 2}s linear infinite`;
-
-        line.style.animationDelay = `${i * 0.3}s`;
-
-        line.textContent =
-            (MATRIX_TEXT + " ").repeat(
-                Math.ceil(window.innerWidth / 50)
-            );
-
-        container.appendChild(line);
-    }
-}
-
-function initLoveEffect(){
-
-    const container = document.getElementById('loveContainer');
-
-    setInterval(() => {
-
-        const love = document.createElement('div');
-
-        love.className = 'love-text';
-
-        love.style.left = `${Math.random() * 95}vw`;
-
-        love.style.animationDuration =
-            `${Math.random() * 4 + 6}s`;
-
-        love.textContent =
-            LOVE_CHARS[
-                Math.floor(Math.random() * LOVE_CHARS.length)
-            ];
-
-        container.appendChild(love);
-
-        setTimeout(() => love.remove(),10000);
-
-    },150);
-}
-
-function handleResize(){
-
-    document.querySelectorAll('.text-container').forEach(line => {
-
-        line.textContent =
-            (MATRIX_TEXT + " ").repeat(
-                Math.ceil(window.innerWidth / 50)
-            );
-
-    });
-}
-
-window.addEventListener('load',() => {
-
-    initMatrix();
-
-    initLoveEffect();
-
-    handleResize();
-
-});
-
-window.addEventListener('resize',handleResize);
-
-const audio = document.getElementById("musica");
-
-function iniciarAudio(){
-
-    if(audio){
-
-        audio.play().catch(() => {});
-
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     }
 
-    document.removeEventListener("click",iniciarAudio);
+    resizeCanvas();
 
-    document.removeEventListener("touchstart",iniciarAudio);
+    const phrases = ["ВІТАЮ!!", "ЗІ СВЯТОМ"];
+    const fontSize = 16;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array(columns).fill(1);
 
-}
+    function randomColor() {
+      const colors = [
+        "#ff1493",
+        "#ff007f",
+        "#ff69b4",
+        "#ff66cc",
+        "#ff4fa3",
+        "#ff6eb4",
+        "#ff3cac",
+        "#ff85c1"
+      ];
 
-document.addEventListener("click",iniciarAudio);
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
 
-document.addEventListener("touchstart",iniciarAudio);
+    function randomPhrase() {
+      return phrases[Math.floor(Math.random() * phrases.length)];
+    }
 
-</script>
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.font = fontSize + "px Arial";
+
+      for (let i = 0; i < drops.length; i++) {
+        ctx.fillStyle = randomColor();
+
+        const text = randomPhrase();
+
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (
+          drops[i] * fontSize > canvas.height &&
+          Math.random() > 0.975
+        ) {
+          drops[i] = 0;
+        }
+
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, 100);
+
+    window.addEventListener('resize', resizeCanvas);
+
+    const audio = document.getElementById("musica");
+
+    function toggleAudio() {
+      if (audio.paused) {
+        audio.play();
+      } else {
+        audio.pause();
+      }
+    }
+  </script>
 
 </body>
 </html>
